@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import TaskInput from './components/TaskInput';
 import TaskItem from './components/TaskItem';
 
@@ -9,8 +10,37 @@ export interface Task {
   completed: boolean;
 }
 
+const TASKS_STORAGE_KEY = '@tasks_storage_key';
+
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  useEffect(() => {
+    saveTasks();
+  }, [tasks]);
+
+  const loadTasks = async () => {
+    try {
+      const savedTasks = await AsyncStorage.getItem(TASKS_STORAGE_KEY);
+      if (savedTasks) {
+        setTasks(JSON.parse(savedTasks));
+      }
+    } catch (error) {
+      console.error('Failed to load tasks:', error);
+    }
+  };
+
+  const saveTasks = async () => {
+    try {
+      await AsyncStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
+    } catch (error) {
+      console.error('Failed to save tasks:', error);
+    }
+  };
 
   const handleAddTask = (description: string) => {
     const newTask: Task = {
@@ -43,7 +73,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>To Do List</Text>
+      <Text style={styles.title}>To-Do List</Text>
       <TaskInput onAddTask={handleAddTask} />
       <FlatList
         data={tasks}
