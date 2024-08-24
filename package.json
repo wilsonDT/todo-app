@@ -18,7 +18,12 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
     "@types/react-native": "^0.72.8",
+    "prettier": "^3.3.3",
+    "prettier-plugin-sort-imports": "^1.8.6",
     "typescript": "^5.1.3"
   },
-  "private": true
+  "private": true,
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\""
+  }
 }
