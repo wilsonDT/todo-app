@@ -73,7 +73,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>To-Do List</Text>
+      <Text style={styles.title}>To Do List</Text>
       <TaskInput onAddTask={handleAddTask} />
       <FlatList
         data={tasks}

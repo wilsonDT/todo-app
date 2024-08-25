@@ -9,6 +9,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import deleteIcon from '../assets/delete-icon.png';
+import editIcon from '../assets/edit-icon.png';
+
+
 const TaskItem = ({ task, onEditTask, onDeleteTask, onToggleComplete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task.description);
@@ -32,8 +36,8 @@ const TaskItem = ({ task, onEditTask, onDeleteTask, onToggleComplete }) => {
   return (
     <View style={styles.taskItem}>
       <TouchableOpacity onPress={() => onToggleComplete(task.id)}>
-        <View style={styles.checkbox}>
-          {task.completed && <Text style={styles.checkboxText}>✔</Text>}
+        <View style={[styles.checkbox, task.completed && styles.checkedCheckbox]}>
+          {task.completed && <Text style={styles.checkboxText}>✓</Text>}
         </View>
       </TouchableOpacity>
 
@@ -80,23 +84,29 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    borderColor: 'gray',
+    borderColor: '#F04438',
     borderWidth: 1,
     padding: 10,
     marginRight: 10,
     borderRadius: 5,
+    color: '#F04438',  
   },
   checkbox: {
     width: 24,
     height: 24,
-    borderWidth: 1,
-    borderColor: '#ddd',
+    borderWidth: 1, 
+    borderColor: '#F04438',
+    borderRadius: 6, 
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
   },
+  checkedCheckbox: {
+    backgroundColor: '#F04438',
+  },
   checkboxText: {
     fontSize: 18,
+    color: '#FFFFFF',
   },
 });
 
