@@ -1,4 +1,4 @@
-# To-Do List App
+# Todo List App
 
 ## Project Description
 
