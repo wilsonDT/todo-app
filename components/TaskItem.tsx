@@ -74,6 +74,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 10,
+    paddingRight: 20,
+    paddingLeft: 20,
   },
   taskText: {
     flex: 1,
@@ -112,6 +114,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginLeft: 10,
+    opacity: 0.5,
   },
   saveText: {
     color: '#F04438',

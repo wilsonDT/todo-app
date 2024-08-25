@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TaskInput from './components/TaskInput';
 import TaskItem from './components/TaskItem';
@@ -8,12 +8,14 @@ export interface Task {
   id: string;
   description: string;
   completed: boolean;
+  createdAt: number;
 }
 
 const TASKS_STORAGE_KEY = '@tasks_storage_key';
 
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [sortBy, setSortBy] = useState<'date' | 'status'>('date');
 
   useEffect(() => {
     loadTasks();
@@ -47,6 +49,7 @@ export default function App() {
       id: Date.now().toString(),
       description,
       completed: false,
+      createdAt: Date.now(),
     };
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
@@ -71,12 +74,32 @@ export default function App() {
     );
   };
 
+  const sortedTasks = [...tasks].sort((a, b) => {
+    if (sortBy === 'date') {
+      return b.createdAt - a.createdAt;
+    } else {
+      return Number(a.completed) - Number(b.completed);
+    }
+  });
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>To Do List</Text>
+      <Text style={styles.title}>Todo List</Text>
+      <View style={styles.sortButtons}>
+        <Button
+          title="Sort by Date"
+          onPress={() => setSortBy('date')}
+          color={sortBy === 'date' ? '#F04438' : '#ccc'}
+        />
+        <Button
+          title="Sort by Status"
+          onPress={() => setSortBy('status')}
+          color={sortBy === 'status' ? '#F04438' : '#ccc'}
+        />
+      </View>
       <TaskInput onAddTask={handleAddTask} />
       <FlatList
-        data={tasks}
+        data={sortedTasks}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TaskItem
@@ -94,13 +117,20 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFBFA',
     paddingTop: 50,
     paddingHorizontal: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 10,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  sortButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 20,
   },
 });
