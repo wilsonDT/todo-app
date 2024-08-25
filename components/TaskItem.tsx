@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TextInput,
-  Button,
+  Image,
   Alert,
   StyleSheet,
   TouchableOpacity,
@@ -11,7 +11,6 @@ import {
 
 import deleteIcon from '../assets/delete-icon.png';
 import editIcon from '../assets/edit-icon.png';
-
 
 const TaskItem = ({ task, onEditTask, onDeleteTask, onToggleComplete }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -42,23 +41,27 @@ const TaskItem = ({ task, onEditTask, onDeleteTask, onToggleComplete }) => {
       </TouchableOpacity>
 
       {isEditing ? (
-        <TextInput
-          style={[styles.input, task.completed && styles.completedTask]}
-          value={editedTask}
-          onChangeText={setEditedTask}
-        />
-      ) : (
-        <Text style={[styles.taskText, task.completed && styles.completedTask]}>
-          {task.description}
-        </Text>
-      )}
-
-      {isEditing ? (
-        <Button title="Save" onPress={handleSave} />
+        <>
+          <TextInput
+            style={[styles.input, task.completed && styles.completedTask]}
+            value={editedTask}
+            onChangeText={setEditedTask}
+          />
+          <TouchableOpacity onPress={handleSave}>
+            <Text style={styles.saveText}>Save</Text>
+          </TouchableOpacity>
+        </>
       ) : (
         <>
-          <Button title="Edit" onPress={() => setIsEditing(true)} />
-          <Button title="Delete" onPress={confirmDelete} color="red" />
+          <Text style={[styles.taskText, task.completed && styles.completedTask]}>
+            {task.description}
+          </Text>
+          <TouchableOpacity onPress={() => setIsEditing(true)}>
+            <Image source={editIcon} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={confirmDelete}>
+            <Image source={deleteIcon} style={styles.icon} />
+          </TouchableOpacity>
         </>
       )}
     </View>
@@ -71,8 +74,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
   },
   taskText: {
     flex: 1,
@@ -84,19 +85,18 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    borderColor: '#F04438',
+    borderColor: '#98A2B3',
     borderWidth: 1,
     padding: 10,
     marginRight: 10,
     borderRadius: 5,
-    color: '#F04438',  
   },
   checkbox: {
     width: 24,
     height: 24,
-    borderWidth: 1, 
+    borderWidth: 2,
     borderColor: '#F04438',
-    borderRadius: 6, 
+    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
@@ -107,6 +107,15 @@ const styles = StyleSheet.create({
   checkboxText: {
     fontSize: 18,
     color: '#FFFFFF',
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    marginLeft: 10,
+  },
+  saveText: {
+    color: '#F04438',
+    marginLeft: 10,
   },
 });
 

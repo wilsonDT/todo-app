@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import deleteIcon from '../assets/delete-icon.png';
 
 const TaskInput = ({ onAddTask }) => {
   const [task, setTask] = useState('');
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    borderColor: '#F04438',
+    borderColor: '#98A2B3',
     borderWidth: 1,
     padding: 10,
     borderRadius: 5,
