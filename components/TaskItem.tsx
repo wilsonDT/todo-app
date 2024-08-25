@@ -35,7 +35,9 @@ const TaskItem = ({ task, onEditTask, onDeleteTask, onToggleComplete }) => {
   return (
     <View style={styles.taskItem}>
       <TouchableOpacity onPress={() => onToggleComplete(task.id)}>
-        <View style={[styles.checkbox, task.completed && styles.checkedCheckbox]}>
+        <View
+          style={[styles.checkbox, task.completed && styles.checkedCheckbox]}
+        >
           {task.completed && <Text style={styles.checkboxText}>✓</Text>}
         </View>
       </TouchableOpacity>
@@ -53,7 +55,9 @@ const TaskItem = ({ task, onEditTask, onDeleteTask, onToggleComplete }) => {
         </>
       ) : (
         <>
-          <Text style={[styles.taskText, task.completed && styles.completedTask]}>
+          <Text
+            style={[styles.taskText, task.completed && styles.completedTask]}
+          >
             {task.description}
           </Text>
           <TouchableOpacity onPress={() => setIsEditing(true)}>
