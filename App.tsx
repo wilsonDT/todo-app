@@ -11,17 +11,19 @@ export interface Task {
   createdAt: number;
 }
 
-const TASKS_STORAGE_KEY = '@tasks_storage_key';
+const TASKS_STORAGE_KEY = '@tasks_storage_key'; // Key used to store tasks in AsyncStorage
 
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [sortBy, setSortBy] = useState<'date' | 'status'>('date');
   const [error, setError] = useState<string | null>(null);
 
+  // Load tasks from AsyncStorage when the component mounts
   useEffect(() => {
     loadTasks();
   }, []);
 
+  // Save tasks to AsyncStorage whenever the tasks state changes
   useEffect(() => {
     saveTasks();
   }, [tasks]);
@@ -98,6 +100,7 @@ export default function App() {
     }
   };
 
+  // Sort tasks based on the selected criteria (date and status)
   const sortedTasks = [...tasks].sort((a, b) => {
     if (sortBy === 'date') {
       return b.createdAt - a.createdAt;
